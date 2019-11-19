@@ -1,19 +1,19 @@
-import {Store} from '../../types/index'
-import {Action} from '../actions/counter'
-import * as types from '../action-types'
+// 引入合并方法
+import { combineReducers } from "redux";
+// 引入需要合并的reducer
+import counter from "./counter";
+// 引入需要合并的reducer
+import counter2 from "./counter2";
 
-let initState:Store = {number:0}
+// 引入connectRouter
+import { connectRouter } from "connected-react-router";
+import history from "../../history";
 
-export default function(state: Store=initState,action:Action){
-    switch(action.type){
-        case types.ADD:
-            return {number: state.number + 1}
-            break
-        case types.SUBTRACT:
-            return {number: state.number - 1}
-            break
-        default:
-            return state
-            break
-    }
-}
+
+// 合并
+let reducers:any = combineReducers({
+    counter,
+    counter2,
+    router: connectRouter(history)
+});
+export default reducers;
